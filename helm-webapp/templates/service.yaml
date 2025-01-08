@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-react-app-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}-react-app
+spec:
+  selector:
+    app: {{ .Values.appName }}-react-app
+  ports:
+  - protocol: TCP
+    port: {{ .Values.service.port }}
+    targetPort: 3000
+  type: {{ .Values.service.type }}

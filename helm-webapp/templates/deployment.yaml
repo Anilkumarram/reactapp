@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-react-app
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}-react-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-react-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-react-app
+    spec:
+      serviceAccountName: {{ .Values.appName }}-sa
+      containers:
+      - name: react-app
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
